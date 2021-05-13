@@ -1,0 +1,7 @@
+logging:
+  level: INFO
+  loggers:
+    net.bosselaar.seprinter: DEBUG
+
+streamelements:
+  jwtToken: "insert SE jwt token here"
