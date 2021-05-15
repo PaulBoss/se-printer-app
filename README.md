@@ -1,5 +1,7 @@
 # SEPrinterApp
 
+A small web application to handle StreamElements events and send them to a printer to print bits and donations.
+
 How to start the SEPrinterApp application
 ---
 
