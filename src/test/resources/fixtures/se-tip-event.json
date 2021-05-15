@@ -1,0 +1,16 @@
+{
+  "createdAt": "2021-05-15T13:16:13.926Z",
+  "data": {
+    "tipId": "609fc99d842a807bcd1ab040",
+    "amount": 1,
+    "currency": "EUR",
+    "avatar": "https://cdn.streamelements.com/static/default-avatar.png",
+    "message": "",
+    "username": "creepy113"
+  },
+  "provider": "twitch",
+  "channel": "5e010fcce40b7e24e83a274c",
+  "_id": "609fc9c4532bb7724b987298",
+  "type": "tip",
+  "updatedAt": "2021-05-15T13:16:13.926Z"
+}

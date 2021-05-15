@@ -1,12 +1,11 @@
 package net.bosselaar.seprinter;
 
-import io.dropwizard.Configuration;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import io.dropwizard.Configuration;
 import net.bosselaar.seprinter.config.StreamElementsConfig;
-import org.hibernate.validator.constraints.*;
 
 import javax.validation.Valid;
-import javax.validation.constraints.*;
+import javax.validation.constraints.NotNull;
 
 public class SEPrinterAppConfiguration extends Configuration {
 
