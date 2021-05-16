@@ -6,6 +6,7 @@ import io.dropwizard.lifecycle.Managed;
 import io.socket.client.IO;
 import io.socket.client.Socket;
 import net.bosselaar.seprinter.config.StreamElementsConfig;
+import net.bosselaar.seprinter.core.streamelements.ISEEventListener;
 import net.bosselaar.seprinter.core.streamelements.messages.AuthenticateMsg;
 import net.bosselaar.seprinter.core.streamelements.model.Event;
 import org.json.JSONObject;
@@ -20,10 +21,12 @@ public class SESocketConnection implements Managed {
     private final StreamElementsConfig config;
     private Socket socket;
     private final ObjectMapper mapper = new ObjectMapper();
+    private final ISEEventListener listener;
 
 
-    public SESocketConnection(StreamElementsConfig config) {
+    public SESocketConnection(StreamElementsConfig config, ISEEventListener listener) {
         this.config = config;
+        this.listener = listener;
     }
 
     @Override
@@ -53,6 +56,7 @@ public class SESocketConnection implements Managed {
 
             try {
                 Event event = mapper.readValue("" + args[0], Event.class);
+                listener.handleEvent(event);
             } catch (JsonProcessingException e) {
                 LOGGER.error("Could not convert to Event", e);
             }

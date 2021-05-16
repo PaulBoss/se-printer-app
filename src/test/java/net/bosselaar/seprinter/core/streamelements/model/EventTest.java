@@ -2,11 +2,14 @@ package net.bosselaar.seprinter.core.streamelements.model;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.junit.Assert;
+import net.bosselaar.seprinter.core.printer.Printer;
 import org.junit.Test;
-import static org.assertj.core.api.Assertions.assertThat;
+
+import javax.print.PrintException;
+import java.io.IOException;
 
 import static io.dropwizard.testing.FixtureHelpers.fixture;
+import static org.assertj.core.api.Assertions.assertThat;
 
 public class EventTest {
 
@@ -20,5 +23,14 @@ public class EventTest {
         assertThat(event.data.amount).isEqualTo(1);
         assertThat(event.data.currency).isEqualTo("EUR");
         assertThat(event.data.username).isEqualTo("creepy113");
+    }
+
+    // Shortcut to quicktest the actual printing.
+    public static void main(String[] args) throws IOException {
+        Printer printer = new Printer();
+        printer.start();
+
+        Event event = MAPPER.readValue(fixture("fixtures/se-tip-event.json"), Event.class);
+        printer.addJob(event);
     }
 }
