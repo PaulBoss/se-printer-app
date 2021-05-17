@@ -61,7 +61,7 @@ public class Printer implements Managed, Runnable {
 
     public void printEvent(Event e) throws PrintException, IOException, InterruptedException {
         String text1 = String.format("%s", e.data.username);
-        String text2= String.format("donated %d %s", e.data.amount, e.data.currency);
+        String text2= String.format("donated %.2f %s", e.data.amount, e.data.currency);
 
         byte[] imageData = createImage(e.data.avatar, text1, text2);
 
