@@ -5,7 +5,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import net.bosselaar.seprinter.core.printer.Printer;
 import org.junit.Test;
 
-import javax.print.PrintException;
 import java.io.IOException;
 import java.math.BigDecimal;
 
@@ -21,7 +20,7 @@ public class EventTest {
         Event event = MAPPER.readValue(fixture("fixtures/se-tip-event.json"), Event.class);
 
         assertThat(event.type).isEqualTo(EventType.tip);
-        assertThat(event.data.amount).isEqualTo(1);
+        assertThat(event.data.amount).isEqualTo(BigDecimal.valueOf(1));
         assertThat(event.data.currency).isEqualTo("EUR");
         assertThat(event.data.username).isEqualTo("creepy113");
     }
