@@ -5,3 +5,8 @@ logging:
 
 streamelements:
   jwtToken: "insert SE jwt token here"
+
+printer:
+  dpi: 203
+  paperWidth: 58
+  printableWidth: 48

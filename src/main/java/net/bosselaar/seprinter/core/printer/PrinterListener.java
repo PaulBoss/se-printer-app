@@ -6,15 +6,15 @@ import net.bosselaar.seprinter.core.streamelements.model.EventType;
 
 public class PrinterListener implements ISEEventListener {
 
-    private final Printer printer;
+    private final IReceiptPrinter printer;
 
-    public PrinterListener(Printer printer) {
+    public PrinterListener(IReceiptPrinter printer) {
         this.printer = printer;
     }
 
     @Override
     public void handleEvent(Event event) {
-        if (event.type == EventType.tip)
+        if (event.type == EventType.tip || event.type == EventType.cheer)
             printer.addJob(event);
     }
 }

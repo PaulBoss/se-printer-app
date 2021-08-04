@@ -4,7 +4,8 @@ import io.dropwizard.Application;
 import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
 import net.bosselaar.seprinter.core.managed.SESocketConnection;
-import net.bosselaar.seprinter.core.printer.Printer;
+import net.bosselaar.seprinter.core.printer.DefaultPrinterPrinter;
+import net.bosselaar.seprinter.core.printer.IReceiptPrinter;
 import net.bosselaar.seprinter.core.printer.PrinterListener;
 
 public class SEPrinterAppApplication extends Application<SEPrinterAppConfiguration> {
@@ -32,7 +33,7 @@ public class SEPrinterAppApplication extends Application<SEPrinterAppConfigurati
     @Override
     public void run(final SEPrinterAppConfiguration configuration,
                     final Environment environment) {
-        Printer printer = new Printer();
+        DefaultPrinterPrinter printer = new DefaultPrinterPrinter(configuration.printer);
 
         SESocketConnection socketConnection = new SESocketConnection(
                 configuration.streamElements,
@@ -41,11 +42,8 @@ public class SEPrinterAppApplication extends Application<SEPrinterAppConfigurati
                 )
         );
 
-
         environment.lifecycle().manage(printer);
         environment.lifecycle().manage(socketConnection);
-
-
 
     }
 

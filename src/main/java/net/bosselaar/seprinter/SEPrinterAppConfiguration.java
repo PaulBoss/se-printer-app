@@ -2,6 +2,7 @@ package net.bosselaar.seprinter;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.dropwizard.Configuration;
+import net.bosselaar.seprinter.config.PrinterConfig;
 import net.bosselaar.seprinter.config.StreamElementsConfig;
 
 import javax.validation.Valid;
@@ -14,4 +15,8 @@ public class SEPrinterAppConfiguration extends Configuration {
     @Valid
     StreamElementsConfig streamElements;
 
+    @JsonProperty("printer")
+    @NotNull
+    @Valid
+    PrinterConfig printer;
 }

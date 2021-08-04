@@ -1,0 +1,18 @@
+{
+  "createdAt": "2021-05-16T19:47:56.388Z",
+  "flagged": false,
+  "data": {
+    "amount": 100,
+    "quantity": 0,
+    "providerId": "407665396",
+    "displayName": "AnAnonymousCheerer",
+    "avatar": "https://cdn.streamelements.com/static/default-avatar.png",
+    "message": "Anon100",
+    "username": "Anonymous"
+  },
+  "provider": "twitch",
+  "channel": "5e010fcce40b7e24e83a274c",
+  "_id": "60a176ec241d3846a2779ae3",
+  "type": "cheer",
+  "updatedAt": "2021-05-16T19:47:56.388Z"
+}

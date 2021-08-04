@@ -2,7 +2,10 @@ package net.bosselaar.seprinter.core.streamelements.model;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import net.bosselaar.seprinter.core.printer.Printer;
+import net.bosselaar.seprinter.config.PrinterConfig;
+import net.bosselaar.seprinter.core.printer.DefaultPrinterPrinter;
+import net.bosselaar.seprinter.core.printer.IReceiptPrinter;
+import net.bosselaar.seprinter.core.printer.PngFilePrinter;
 import org.junit.Test;
 
 import java.io.IOException;
@@ -16,7 +19,7 @@ public class EventTest {
     private final static ObjectMapper MAPPER = new ObjectMapper();
 
     @Test
-    public void canDeserializeTest() throws JsonProcessingException {
+    public void canDeserializeTipTest() throws JsonProcessingException {
         Event event = MAPPER.readValue(fixture("fixtures/se-tip-event.json"), Event.class);
 
         assertThat(event.type).isEqualTo(EventType.tip);
@@ -35,13 +38,33 @@ public class EventTest {
         assertThat(event.data.username).isEqualTo("creepy113");
     }
 
+    @Test
+    public void canDeserializeCheerTest() throws JsonProcessingException {
+        Event event = MAPPER.readValue(fixture("fixtures/se-bits-event.json"), Event.class);
+        assertThat(event.type).isEqualTo(EventType.cheer);
+        assertThat(event.createdAt).isEqualTo("2021-05-16T19:47:56.388Z");
+        assertThat(event.provider).isEqualTo(EventProvider.twitch);
+
+        assertThat(event.data.amount).isEqualTo(new BigDecimal("100"));
+        assertThat(event.data.currency).isNull();
+        assertThat(event.data.username).isEqualTo("Anonymous");
+        assertThat(event.data.displayName).isEqualTo("AnAnonymousCheerer");
+        assertThat(event.data.message).isEqualTo("Anon100");
+    }
+
+
 
     // Shortcut to quicktest the actual printing.
     public static void main(String[] args) throws IOException {
-        Printer printer = new Printer();
+        //IReceiptPrinter printer = new DefaultPrinterPrinter(new PrinterConfig());
+        //printer.start();
+        IReceiptPrinter printer = new PngFilePrinter(new PrinterConfig());
         printer.start();
 
-        Event event = MAPPER.readValue(fixture("fixtures/se-tip-nonint-event.json"), Event.class);
+
+        Event event = MAPPER.readValue(fixture("fixtures/se-bits-event.json"), Event.class);
         printer.addJob(event);
     }
+
+
 }
