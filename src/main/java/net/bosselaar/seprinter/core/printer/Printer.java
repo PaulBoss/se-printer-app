@@ -78,7 +78,7 @@ public class Printer implements Managed, Runnable {
         watcher.waitForDone();
 
         /*
-            Somehow even after waitForDone a new job was submitted too quickly. Sop wait for the number of jobs
+            Somehow even after waitForDone a new job was submitted too quickly. So wait for the number of jobs
             to be zero.
          */
         while (!isPrintCompleted(defaultPrinterService)) {
