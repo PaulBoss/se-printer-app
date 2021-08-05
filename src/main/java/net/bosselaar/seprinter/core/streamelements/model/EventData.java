@@ -14,6 +14,9 @@ public class EventData {
 
     public String displayName;
 
+    public String sender;
+    public boolean gifted = false;
+
     @JsonFormat(shape= JsonFormat.Shape.STRING)
     public BigDecimal amount;
     public int streak = 0;

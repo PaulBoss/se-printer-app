@@ -25,11 +25,11 @@ public class ImageCreator {
 
         switch (e.type) {
             case tip:
-                text1 = String.format("%s", e.data.username);
+                text1 = String.format("%s", e.data.displayName);
                 text2= String.format("donated %.2f %s.", e.data.amount, e.data.currency);
                 break;
             case cheer:
-                text1 = String.format("%s", e.data.username);
+                text1 = String.format("%s", e.data.displayName);
                 text2= String.format("cheered %.0f bits.", e.data.amount);
                 break;
             case raid:
@@ -37,13 +37,18 @@ public class ImageCreator {
                 text2= String.format("with %.0f viewers!", e.data.amount);
                 break;
             case subscriber:
-                text1 =String.format("%s subscribed!", e.data.username);
-                text2= String.format("%d month streak.", e.data.streak);
+                if (e.data.gifted) {
+                    text1 = String.format("%s just gifted", e.data.sender);
+                    text2 = String.format("a sub to %s!", e.data.displayName);
+                } else {
+                    text1 = String.format("%s subscribed!", e.data.displayName);
+                    text2 = String.format("%d month streak.", e.data.streak);
+                }
                 break;
 
             default:
-                text1 = String.format("%s did ", e.data.username);
-                text2= "something unsupported.";
+                text1 = "Bits/cheers/etc";
+                text2= "will be printed!";
         }
 
         return createImage(e.data.avatar, text1, text2, dpi, printableSize, rotated);
@@ -61,12 +66,12 @@ public class ImageCreator {
 
         final BufferedImage img = ImageIO.read(new URL(url));
 
-        final BufferedImage output = new BufferedImage(WIDTH,HEIGHT, BufferedImage.TYPE_INT_ARGB);
+        final BufferedImage output = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_ARGB);
         final Graphics2D g = output.createGraphics();
 
         if (rotated) {
             final AffineTransform at = new AffineTransform();
-            at.rotate(Math.PI, WIDTH / 2.0, HEIGHT / 2.0);
+            at.rotate(Math.PI / 2, WIDTH / 2.0, HEIGHT / 2.0);
             g.transform(at);
         }
 
@@ -74,7 +79,7 @@ public class ImageCreator {
         g.fillRect(0, 0, WIDTH, HEIGHT);
 
         final int imageWidth = WIDTH - (WIDTH / 4);
-        final int fontSize = WIDTH / 15;
+        final int fontSize = WIDTH / 14;
         final int lineSize = fontSize / 5 + fontSize;
 
         g.drawImage(img, (WIDTH / 2) - (imageWidth / 2) , 0, imageWidth, imageWidth, null);

@@ -1,0 +1,21 @@
+{
+  "createdAt": "2021-08-05T19:19:29.044Z",
+  "flagged": false,
+  "data": {
+    "amount": 2,
+    "quantity": 0,
+    "tier": "1000",
+    "gifted": true,
+    "sender": "Mortumxl",
+    "providerId": "19264472",
+    "displayName": "VampierMSX",
+    "avatar": "https://cdn.streamelements.com/static/default-avatar.png",
+    "message": "Mortumxl gifted a Tier 1 sub to VampierMSX!",
+    "username": "vampiermsx"
+  },
+  "provider": "twitch",
+  "channel": "5e010fcce40b7e24e83a274c",
+  "_id": "610c39c1954e8a774dc1fd30",
+  "type": "subscriber",
+  "updatedAt": "2021-08-05T19:19:29.044Z"
+}

@@ -30,6 +30,17 @@ public class EventTest {
     }
 
     @Test
+    public void canDeserializeGiftedSubTest() throws JsonProcessingException {
+        Event event = MAPPER.readValue(fixture("fixtures/se-gifted-sub.json"), Event.class);
+
+        assertThat(event.type).isEqualTo(EventType.subscriber);
+        assertThat(event.data.amount).isEqualTo(BigDecimal.valueOf(2));
+        assertThat(event.data.username).isEqualTo("vampiermsx");
+        assertThat(event.data.sender).isEqualTo("Mortumxl");
+        assertThat(event.data.gifted).isEqualTo(true);
+    }
+
+    @Test
     public void canDeserializeNonIntAmountTest() throws JsonProcessingException {
         Event event = MAPPER.readValue(fixture("fixtures/se-tip-nonint-event.json"), Event.class);
 
@@ -58,15 +69,14 @@ public class EventTest {
     // Shortcut to quicktest the actual printing.
     public static void main(String[] args) throws IOException {
         PrinterConfig printerConfig = new PrinterConfig();
-        printerConfig.rotate = false;
+        printerConfig.rotate = true;
 
         IReceiptPrinter printer = new DefaultPrinterPrinter(printerConfig);
-        ISEEventListener listener = new PrinterListener(printer);
 
         printer.start();
 
-        Event event = MAPPER.readValue(fixture("fixtures/se-bits-event.json"), Event.class);
-        listener.handleEvent(event);
+        Event event = MAPPER.readValue(fixture("fixtures/se-gifted-sub.json"), Event.class);
+        printer.addJob(event);
 
         printer.stop();
     }
