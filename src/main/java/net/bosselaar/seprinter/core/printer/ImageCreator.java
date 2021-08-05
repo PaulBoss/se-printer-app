@@ -19,7 +19,7 @@ public class ImageCreator {
 
     private final static double INCH_2_CM = 2.54;
 
-    public static byte[] createEventImage(Event e, int dpi, int printableSize, boolean rotated ) throws IOException {
+    public static byte[] createEventImage(Event e, int dpi, int printableSize, int angle) throws IOException {
         String text1;
         String text2;
 
@@ -51,7 +51,7 @@ public class ImageCreator {
                 text2= "will be printed!";
         }
 
-        return createImage(e.data.avatar, text1, text2, dpi, printableSize, rotated);
+        return createImage(e.data.avatar, text1, text2, dpi, printableSize, angle);
     }
 
     private static int getTextWidth(Graphics graphics, Font font, String text) {
@@ -60,7 +60,7 @@ public class ImageCreator {
     }
 
 
-    private static byte[] createImage(String url, String textLine1, String textLine2, int dpi, int printableSize, boolean rotated) throws IOException {
+    private static byte[] createImage(String url, String textLine1, String textLine2, int dpi, int printableSize, int angle) throws IOException {
         final int WIDTH = (int)(dpi * printableSize / INCH_2_CM);
         final int HEIGHT = WIDTH;
 
@@ -69,9 +69,9 @@ public class ImageCreator {
         final BufferedImage output = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_ARGB);
         final Graphics2D g = output.createGraphics();
 
-        if (rotated) {
+        if (angle != 0) {
             final AffineTransform at = new AffineTransform();
-            at.rotate(Math.PI / 2, WIDTH / 2.0, HEIGHT / 2.0);
+            at.rotate(Math.toRadians(angle), WIDTH / 2.0, HEIGHT / 2.0);
             g.transform(at);
         }
 

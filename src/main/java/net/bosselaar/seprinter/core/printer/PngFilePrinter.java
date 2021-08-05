@@ -48,7 +48,7 @@ public class PngFilePrinter implements IReceiptPrinter {
     }
 
     public void printEvent(Event e) throws IOException {
-        byte[] imageData = ImageCreator.createEventImage(e, this.DPI, this.PRINTABLE_WIDTH, false);
+        byte[] imageData = ImageCreator.createEventImage(e, this.DPI, this.PRINTABLE_WIDTH, 0);
 
         BufferedImage image = ImageIO.read(new ByteArrayInputStream(imageData));
 
