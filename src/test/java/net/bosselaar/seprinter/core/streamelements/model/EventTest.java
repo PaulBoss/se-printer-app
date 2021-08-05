@@ -5,7 +5,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import net.bosselaar.seprinter.config.PrinterConfig;
 import net.bosselaar.seprinter.core.printer.DefaultPrinterPrinter;
 import net.bosselaar.seprinter.core.printer.IReceiptPrinter;
-import net.bosselaar.seprinter.core.printer.PngFilePrinter;
+import net.bosselaar.seprinter.core.printer.PrinterListener;
+import net.bosselaar.seprinter.core.streamelements.ISEEventListener;
 import org.junit.Test;
 
 import java.io.IOException;
@@ -56,14 +57,18 @@ public class EventTest {
 
     // Shortcut to quicktest the actual printing.
     public static void main(String[] args) throws IOException {
-        //IReceiptPrinter printer = new DefaultPrinterPrinter(new PrinterConfig());
-        //printer.start();
-        IReceiptPrinter printer = new PngFilePrinter(new PrinterConfig());
+        PrinterConfig printerConfig = new PrinterConfig();
+        printerConfig.rotate = false;
+
+        IReceiptPrinter printer = new DefaultPrinterPrinter(printerConfig);
+        ISEEventListener listener = new PrinterListener(printer);
+
         printer.start();
 
-
         Event event = MAPPER.readValue(fixture("fixtures/se-bits-event.json"), Event.class);
-        printer.addJob(event);
+        listener.handleEvent(event);
+
+        printer.stop();
     }
 
 

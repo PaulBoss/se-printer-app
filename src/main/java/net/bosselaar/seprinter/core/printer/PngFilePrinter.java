@@ -17,7 +17,6 @@ import java.util.concurrent.LinkedBlockingQueue;
 
 public class PngFilePrinter implements IReceiptPrinter {
 
-    private volatile static boolean stop = false;
     private static final Logger LOGGER = LoggerFactory.getLogger(PngFilePrinter.class.getName());
 
     private final int DPI;
@@ -49,7 +48,7 @@ public class PngFilePrinter implements IReceiptPrinter {
     }
 
     public void printEvent(Event e) throws IOException {
-        byte[] imageData = ImageCreator.createEventImage(e, this.DPI, this.PRINTABLE_WIDTH);
+        byte[] imageData = ImageCreator.createEventImage(e, this.DPI, this.PRINTABLE_WIDTH, false);
 
         BufferedImage image = ImageIO.read(new ByteArrayInputStream(imageData));
 

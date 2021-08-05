@@ -8,6 +8,7 @@ import javax.imageio.metadata.IIOMetadata;
 import javax.imageio.metadata.IIOMetadataNode;
 import javax.imageio.stream.ImageOutputStream;
 import java.awt.*;
+import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -18,26 +19,34 @@ public class ImageCreator {
 
     private final static double INCH_2_CM = 2.54;
 
-    public static byte[] createEventImage(Event e, int dpi, int printableSize) throws IOException {
+    public static byte[] createEventImage(Event e, int dpi, int printableSize, boolean rotated ) throws IOException {
         String text1;
         String text2;
 
         switch (e.type) {
             case tip:
                 text1 = String.format("%s", e.data.username);
-                text2= String.format("donated %.2f %s", e.data.amount, e.data.currency);
+                text2= String.format("donated %.2f %s.", e.data.amount, e.data.currency);
                 break;
             case cheer:
                 text1 = String.format("%s", e.data.username);
-                text2= String.format("cheered %.0f bits", e.data.amount);
+                text2= String.format("cheered %.0f bits.", e.data.amount);
                 break;
+            case raid:
+                text1 =String.format("%s raided", e.data.username);
+                text2= String.format("with %.0f viewers!", e.data.amount);
+                break;
+            case subscriber:
+                text1 =String.format("%s subscribed!", e.data.username);
+                text2= String.format("%d month streak.", e.data.streak);
+                break;
+
             default:
                 text1 = String.format("%s did ", e.data.username);
-                text2= String.format("something unsupported");
+                text2= "something unsupported.";
         }
 
-
-        return createImage(e.data.avatar, text1, text2, dpi, printableSize);
+        return createImage(e.data.avatar, text1, text2, dpi, printableSize, rotated);
     }
 
     private static int getTextWidth(Graphics graphics, Font font, String text) {
@@ -46,29 +55,32 @@ public class ImageCreator {
     }
 
 
-    private static byte[] createImage(String url, String textLine1, String textLine2, int dpi, int printableSize) throws IOException {
+    private static byte[] createImage(String url, String textLine1, String textLine2, int dpi, int printableSize, boolean rotated) throws IOException {
         final int WIDTH = (int)(dpi * printableSize / INCH_2_CM);
         final int HEIGHT = WIDTH;
 
-        BufferedImage img = ImageIO.read(new URL(url));
+        final BufferedImage img = ImageIO.read(new URL(url));
 
-        BufferedImage output = new BufferedImage(WIDTH,HEIGHT, BufferedImage.TYPE_INT_ARGB);
-        Graphics2D g = output.createGraphics();
+        final BufferedImage output = new BufferedImage(WIDTH,HEIGHT, BufferedImage.TYPE_INT_ARGB);
+        final Graphics2D g = output.createGraphics();
+
+        if (rotated) {
+            final AffineTransform at = new AffineTransform();
+            at.rotate(Math.PI, WIDTH / 2.0, HEIGHT / 2.0);
+            g.transform(at);
+        }
 
         g.setColor(new Color(0,0,0,0));
         g.fillRect(0, 0, WIDTH, HEIGHT);
 
-        int imageWidth = WIDTH - (WIDTH / 4);
-        int fontSize = WIDTH / 15;
-        int lineSize = fontSize / 5 + fontSize;
+        final int imageWidth = WIDTH - (WIDTH / 4);
+        final int fontSize = WIDTH / 15;
+        final int lineSize = fontSize / 5 + fontSize;
 
         g.drawImage(img, (WIDTH / 2) - (imageWidth / 2) , 0, imageWidth, imageWidth, null);
         Font font = new Font("Arial", Font.PLAIN, fontSize);
         g.setFont(font);
         g.setColor(Color.black);
-
-        int textWidth = getTextWidth(g, font, textLine1);
-        int xpos = (WIDTH / 2) - (textWidth / 2);
 
         drawTextCentered(g, font, textLine1, WIDTH, imageWidth + lineSize);
         drawTextCentered(g, font, textLine2, WIDTH, imageWidth + lineSize * 2);

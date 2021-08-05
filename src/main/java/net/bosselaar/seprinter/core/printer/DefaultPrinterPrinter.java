@@ -28,6 +28,7 @@ public class DefaultPrinterPrinter implements IReceiptPrinter, Managed, Runnable
     private final int DPI;
     private final int PRINTABLE_WIDTH;
     private final int NON_PRINT_WIDTH;
+    private final boolean rotate;
 
     private final PrintService defaultPrinterService;
     private final BlockingQueue<Event> jobs = new LinkedBlockingQueue<>();
@@ -38,6 +39,7 @@ public class DefaultPrinterPrinter implements IReceiptPrinter, Managed, Runnable
         this.DPI = config.dpi;
         this.PRINTABLE_WIDTH = config.printableWidth;
         this.NON_PRINT_WIDTH = config.paperWidth - config.printableWidth / 2;
+        this.rotate = config.rotate;
     }
 
     @Override
@@ -56,14 +58,14 @@ public class DefaultPrinterPrinter implements IReceiptPrinter, Managed, Runnable
     }
 
     public void printEvent(Event e) throws PrintException, IOException, InterruptedException {
-        byte[] imageData = ImageCreator.createEventImage(e, this.DPI, this.PRINTABLE_WIDTH);
+        byte[] imageData = ImageCreator.createEventImage(e, this.DPI, this.PRINTABLE_WIDTH, this.rotate);
 
         Doc imageDoc = new SimpleDoc(imageData, DocFlavor.BYTE_ARRAY.PNG, null);
 
         DocPrintJob printJob = defaultPrinterService.createPrintJob();
         PrintRequestAttributeSet pras = new HashPrintRequestAttributeSet();
         pras.add(new PrinterResolution(DPI, DPI, PrinterResolution.DPI));
-        pras.add(new MediaPrintableArea(NON_PRINT_WIDTH, NON_PRINT_WIDTH, PRINTABLE_WIDTH, PRINTABLE_WIDTH, MediaPrintableArea.MM));
+        pras.add(new MediaPrintableArea(NON_PRINT_WIDTH, 0, PRINTABLE_WIDTH, PRINTABLE_WIDTH, MediaPrintableArea.MM));
         pras.add(new Copies(1));
 
         PrintJobWatcher watcher = new PrintJobWatcher(printJob);

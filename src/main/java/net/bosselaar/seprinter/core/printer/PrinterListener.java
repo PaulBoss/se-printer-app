@@ -14,7 +14,19 @@ public class PrinterListener implements ISEEventListener {
 
     @Override
     public void handleEvent(Event event) {
-        if (event.type == EventType.tip || event.type == EventType.cheer)
-            printer.addJob(event);
+        // Do not print if less then 100 bits is cheered
+        if (event.type == EventType.cheer && event.data.amount.longValue() < 100) {
+            return;
+        }
+
+        // Only send supported items to the printer
+        switch (event.type) {
+            case tip:
+            case cheer:
+            case raid:
+            case subscriber:
+                printer.addJob(event);
+                break;
+        }
     }
 }
