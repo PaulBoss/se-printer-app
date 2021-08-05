@@ -10,3 +10,4 @@ printer:
   dpi: 203
   paperWidth: 58
   printableWidth: 48
+  rotate: false
