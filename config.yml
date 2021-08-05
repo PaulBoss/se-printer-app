@@ -4,7 +4,7 @@ logging:
     net.bosselaar.seprinter: DEBUG
 
 streamelements:
-  jwtToken: "insert SE jwt token here"
+  jwtToken: "insert SE JWT token here. Go to https://streamelements.com/dashboard/account/channels and enable 'show secrets'"
 
 printer:
   dpi: 203
