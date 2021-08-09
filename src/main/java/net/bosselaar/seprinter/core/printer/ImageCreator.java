@@ -42,7 +42,7 @@ public class ImageCreator {
                     text2 = String.format("a sub to %s!", e.data.displayName);
                 } else {
                     text1 = String.format("%s subscribed!", e.data.displayName);
-                    text2 = String.format("%d month streak.", e.data.streak);
+                    text2 = String.format("%d month streak.", e.data.amount);
                 }
                 break;
 
@@ -79,11 +79,11 @@ public class ImageCreator {
         g.fillRect(0, 0, WIDTH, HEIGHT);
 
         final int imageWidth = WIDTH - (WIDTH / 4);
-        final int fontSize = WIDTH / 14;
+        final int fontSize = WIDTH / 13;
         final int lineSize = fontSize / 5 + fontSize;
 
         g.drawImage(img, (WIDTH / 2) - (imageWidth / 2) , 0, imageWidth, imageWidth, null);
-        Font font = new Font("Arial", Font.PLAIN, fontSize);
+        Font font = new Font("Arial", Font.BOLD, fontSize);
         g.setFont(font);
         g.setColor(Color.black);
 
