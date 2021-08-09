@@ -69,7 +69,7 @@ public class EventTest {
     // Shortcut to quicktest the actual printing.
     public static void main(String[] args) throws IOException {
         PrinterConfig printerConfig = new PrinterConfig();
-        printerConfig.angle = 180;
+        printerConfig.angle = 90;
 
         IReceiptPrinter printer = new DefaultPrinterPrinter(printerConfig);
 
