@@ -35,7 +35,7 @@ public class DefaultPrinterPrinter implements IReceiptPrinter, Managed, Runnable
 
     public DefaultPrinterPrinter(PrinterConfig config) {
         this.defaultPrinterService = PrintServiceLookup.lookupDefaultPrintService();
-        System.out.println("Default printer: " + defaultPrinterService.getName());
+        LOGGER.debug("Default printer: {}", defaultPrinterService.getName());
         this.DPI = config.dpi;
         this.PRINTABLE_WIDTH = config.printableWidth;
         this.NON_PRINT_WIDTH = config.paperWidth - config.printableWidth / 2;
@@ -78,7 +78,6 @@ public class DefaultPrinterPrinter implements IReceiptPrinter, Managed, Runnable
          */
         while (!isPrintCompleted(defaultPrinterService)) {
             Thread.sleep(100);
-            System.out.println("Waiting..");
         }
     }
 
@@ -109,7 +108,7 @@ public class DefaultPrinterPrinter implements IReceiptPrinter, Managed, Runnable
 
 
     /**
-     * Small class to wait for the actuall completion of the printer
+     * Small class to wait for the actual completion of the printer
      */
     public static class PrintJobWatcher {
         private boolean done = false;
@@ -117,25 +116,25 @@ public class DefaultPrinterPrinter implements IReceiptPrinter, Managed, Runnable
         PrintJobWatcher(DocPrintJob job) {
             job.addPrintJobListener(new PrintJobAdapter() {
                 public void printJobCanceled(PrintJobEvent pje) {
-                    System.out.println("Cancelled");
+                    LOGGER.debug("Cancelled");
                     allDone();
                 }
                 public void printJobCompleted(PrintJobEvent pje) {
-                    System.out.println("Completed");
+                    LOGGER.debug("Completed");
                     allDone();
                 }
                 public void printJobFailed(PrintJobEvent pje) {
-                    System.out.println("Failed?");
+                    LOGGER.debug("Failed?");
                     allDone();
                 }
                 public void printJobNoMoreEvents(PrintJobEvent pje) {
-                    System.out.println("No more events");
+                    LOGGER.debug("No more events");
                     allDone();
                 }
                 void allDone() {
                     synchronized (PrintJobWatcher.this) {
                         done = true;
-                        System.out.println("Printing done ...");
+                        LOGGER.debug("Printing done ...");
                         PrintJobWatcher.this.notify();
                     }
                 }
