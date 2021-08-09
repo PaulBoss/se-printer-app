@@ -5,7 +5,6 @@ import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
 import net.bosselaar.seprinter.core.managed.SESocketConnection;
 import net.bosselaar.seprinter.core.printer.DefaultPrinterPrinter;
-import net.bosselaar.seprinter.core.printer.IReceiptPrinter;
 import net.bosselaar.seprinter.core.printer.PrinterListener;
 
 public class SEPrinterAppApplication extends Application<SEPrinterAppConfiguration> {
