@@ -2,7 +2,6 @@ package net.bosselaar.seprinter.core.twitch.model;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import jdk.nashorn.internal.ir.annotations.Ignore;
 
 import java.util.Date;
 

@@ -2,11 +2,7 @@ package net.bosselaar.seprinter.core.streamelements.model;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import net.bosselaar.seprinter.config.PrinterConfig;
-import net.bosselaar.seprinter.core.printer.DefaultPrinterPrinter;
-import net.bosselaar.seprinter.core.printer.IReceiptPrinter;
-import net.bosselaar.seprinter.core.printer.PrinterListener;
-import net.bosselaar.seprinter.core.streamelements.ISEEventListener;
+import net.bosselaar.seprinter.core.twitch.TwitchApi;
 import org.junit.Test;
 
 import java.io.IOException;
@@ -68,6 +64,10 @@ public class EventTest {
 
     // Shortcut to quicktest the actual printing.
     public static void main(String[] args) throws IOException {
+        TwitchApi ah = new TwitchApi("qsk1wl8hnl2r1uk1agg1xzw7nomync", "30laerf3pngnmf1mp5zmagsuw11xii");
+
+        ah.getUserAvatarUrl("creepy113").ifPresent(e -> System.out.println(e));
+/*
         PrinterConfig printerConfig = new PrinterConfig();
         printerConfig.angle = 90;
 
@@ -78,7 +78,7 @@ public class EventTest {
         Event event = MAPPER.readValue(fixture("fixtures/se-gifted-sub.json"), Event.class);
         printer.addJob(event);
 
-        printer.stop();
+        printer.stop(); */
     }
 
 
