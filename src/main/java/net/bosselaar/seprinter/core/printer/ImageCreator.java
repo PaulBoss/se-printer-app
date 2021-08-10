@@ -25,7 +25,7 @@ public class ImageCreator {
 
         switch (e.type) {
             case tip:
-                text1 = String.format("%s", e.data.displayName);
+                text1 = String.format("%s", e.data.username);
                 text2= String.format("donated %.2f %s.", e.data.amount, e.data.currency);
                 break;
             case cheer:
@@ -33,7 +33,7 @@ public class ImageCreator {
                 text2= String.format("cheered %.0f bits.", e.data.amount);
                 break;
             case raid:
-                text1 =String.format("%s raided", e.data.username);
+                text1 =String.format("%s raided", e.data.displayName);
                 text2= String.format("with %.0f viewers!", e.data.amount);
                 break;
             case subscriber:
