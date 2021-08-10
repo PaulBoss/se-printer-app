@@ -3,13 +3,20 @@ package net.bosselaar.seprinter.core.printer;
 import net.bosselaar.seprinter.core.streamelements.ISEEventListener;
 import net.bosselaar.seprinter.core.streamelements.model.Event;
 import net.bosselaar.seprinter.core.streamelements.model.EventType;
+import net.bosselaar.seprinter.core.twitch.TwitchApi;
+
+import java.nio.charset.StandardCharsets;
+import java.util.Locale;
+import java.util.Optional;
 
 public class PrinterListener implements ISEEventListener {
 
     private final IReceiptPrinter printer;
+    private final TwitchApi twitchApi;
 
-    public PrinterListener(IReceiptPrinter printer) {
+    public PrinterListener(IReceiptPrinter printer, TwitchApi twitchApi) {
         this.printer = printer;
+        this.twitchApi = twitchApi;
     }
 
     @Override
@@ -25,8 +32,14 @@ public class PrinterListener implements ISEEventListener {
             case cheer:
             case raid:
             case subscriber:
+                replaceDefaultAvatarUrl(event);
                 printer.addJob(event);
                 break;
         }
+    }
+
+    private void replaceDefaultAvatarUrl(Event event) {
+        Optional<String> result = twitchApi.getUserAvatarUrl(event.data.username.toLowerCase(Locale.ROOT));
+        result.ifPresent(e -> event.data.avatar = e);
     }
 }

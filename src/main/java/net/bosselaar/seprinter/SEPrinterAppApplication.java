@@ -6,6 +6,7 @@ import io.dropwizard.setup.Environment;
 import net.bosselaar.seprinter.core.managed.SESocketConnection;
 import net.bosselaar.seprinter.core.printer.DefaultPrinterPrinter;
 import net.bosselaar.seprinter.core.printer.PrinterListener;
+import net.bosselaar.seprinter.core.twitch.TwitchApi;
 
 public class SEPrinterAppApplication extends Application<SEPrinterAppConfiguration> {
 
@@ -33,12 +34,13 @@ public class SEPrinterAppApplication extends Application<SEPrinterAppConfigurati
     public void run(final SEPrinterAppConfiguration configuration,
                     final Environment environment) {
         DefaultPrinterPrinter printer = new DefaultPrinterPrinter(configuration.printer);
+        TwitchApi twitchApi = new TwitchApi(configuration.twitch.clientId, configuration.twitch.clientSecret);
 
         SESocketConnection socketConnection = new SESocketConnection(
                 configuration.streamElements,
                 new PrinterListener(
-                        printer
-                )
+                        printer,
+                        twitchApi)
         );
 
         environment.lifecycle().manage(printer);
