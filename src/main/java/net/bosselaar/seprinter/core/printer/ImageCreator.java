@@ -42,7 +42,7 @@ public class ImageCreator {
                     text2 = String.format("a sub to %s!", e.data.displayName);
                 } else {
                     text1 = String.format("%s subscribed!", e.data.displayName);
-                    text2 = String.format("%d month streak.", e.data.amount);
+                    text2 = String.format("%d month streak.", e.data.amount.longValue());
                 }
                 break;
 
