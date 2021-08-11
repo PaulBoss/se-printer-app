@@ -22,7 +22,7 @@ public class PrinterListener implements ISEEventListener {
     @Override
     public void handleEvent(Event event) {
         // Do not print if less then 100 bits is cheered
-        if (event.type == EventType.cheer && event.data.amount.longValue() < 100) {
+        if (event.type == EventType.cheer && event.data.amount.longValue() < 50) {
             return;
         }
 
