@@ -7,15 +7,13 @@ import net.bosselaar.seprinter.core.twitch.model.Token;
 import net.bosselaar.seprinter.core.twitch.model.UserData;
 import org.glassfish.jersey.logging.LoggingFeature;
 
-import javax.annotation.ParametersAreNonnullByDefault;
-import javax.validation.constraints.NotNull;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.Invocation;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import java.time.Duration;
 import java.util.Optional;
-import java.util.concurrent.ExecutionException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -29,6 +27,7 @@ public class TwitchApi {
 
     LoadingCache<String, String> userAvatarUrls = CacheBuilder.newBuilder()
             .maximumSize(1000)
+            .expireAfterWrite(Duration.ofDays(1))
             .build(new CacheLoader<String, String>() {
                 @Override
                 public String load(String s) {
@@ -61,7 +60,7 @@ public class TwitchApi {
             if (url != null) {
                 return Optional.of(url);
             }
-        } catch (ExecutionException e) {
+        } catch (Exception e) {
             // Just ignore and return nothing
         }
         return Optional.empty();
