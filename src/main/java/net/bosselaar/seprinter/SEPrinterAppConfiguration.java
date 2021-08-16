@@ -14,15 +14,15 @@ public class SEPrinterAppConfiguration extends Configuration {
     @JsonProperty("streamelements")
     @NotNull
     @Valid
-    StreamElementsConfig streamElements;
+    public StreamElementsConfig streamElements;
 
     @JsonProperty("printer")
     @NotNull
     @Valid
-    PrinterConfig printer;
+    public PrinterConfig printer;
 
     @JsonProperty("twitch")
     @NotNull
     @Valid
-    TwitchConfig twitch;
+    public TwitchConfig twitch;
 }
