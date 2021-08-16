@@ -11,3 +11,7 @@ printer:
   paperWidth: 58
   printableWidth: 48
   angle: 0
+
+twitch:
+  clientId: "Insert Twitch app client ID here"
+  clientSecret: "Insert Twitch app client secret here"
