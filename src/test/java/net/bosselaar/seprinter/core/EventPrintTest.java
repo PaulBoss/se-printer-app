@@ -38,7 +38,7 @@ public class EventPrintTest {
 
         printer.start();
 
-        ISEEventListener listener = new PrinterListener(printer, twitchApi);
+        ISEEventListener listener = new PrinterListener(config.events, printer, twitchApi);
 
         Event event = MAPPER.readValue(fixture("fixtures/se-tip-event.json"), Event.class);
 

@@ -39,6 +39,7 @@ public class SEPrinterAppApplication extends Application<SEPrinterAppConfigurati
         SESocketConnection socketConnection = new SESocketConnection(
                 configuration.streamElements,
                 new PrinterListener(
+                        configuration.events,
                         printer,
                         twitchApi)
         );

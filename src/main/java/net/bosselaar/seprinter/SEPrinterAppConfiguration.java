@@ -2,6 +2,7 @@ package net.bosselaar.seprinter;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.dropwizard.Configuration;
+import net.bosselaar.seprinter.config.EventsConfig;
 import net.bosselaar.seprinter.config.PrinterConfig;
 import net.bosselaar.seprinter.config.StreamElementsConfig;
 import net.bosselaar.seprinter.config.TwitchConfig;
@@ -25,4 +26,9 @@ public class SEPrinterAppConfiguration extends Configuration {
     @NotNull
     @Valid
     public TwitchConfig twitch;
+
+    @JsonProperty("events")
+    @NotNull
+    @Valid
+    public EventsConfig events;
 }

@@ -2,15 +2,8 @@ package net.bosselaar.seprinter.core.streamelements.model;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import net.bosselaar.seprinter.config.PrinterConfig;
-import net.bosselaar.seprinter.core.printer.DefaultPrinterPrinter;
-import net.bosselaar.seprinter.core.printer.IReceiptPrinter;
-import net.bosselaar.seprinter.core.printer.PrinterListener;
-import net.bosselaar.seprinter.core.streamelements.ISEEventListener;
-import net.bosselaar.seprinter.core.twitch.TwitchApi;
 import org.junit.Test;
 
-import java.io.IOException;
 import java.math.BigDecimal;
 
 import static io.dropwizard.testing.FixtureHelpers.fixture;
